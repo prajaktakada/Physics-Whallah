@@ -2,20 +2,20 @@ const express = require('express');
 
 const router = express.Router();
 
-const AuthorController=require("../controllers/authorcontroller")
-const BlogsController=require("../controllers/blogscontroller")
-const Middleware=require("../middleware/Authentication")
+const userController=require("../controllers/User_Controller")
+ const productController=require("../controllers/Product_Controller")
+ const carController = require('../controllers/cartController')
+ const orderController = require('../controllers/orderController')
+ const Middleware=require("../middleware/Auth")
 
-router.get('/test-me', function (req, res) {
-    res.send('My first ever api!')
-});
-//
-router.post('/createAuthor',AuthorController.createAuthor)
-router.post('/createBlogs',Middleware.Auth,BlogsController.createBlogs)
-router.get('/getBlogs',Middleware.Auth,BlogsController.getBlogs)
-router.put('/update/:blogId',Middleware.Auth,BlogsController.update)
-router.delete('/DeleteBlogs/:deleteId',Middleware.Auth,BlogsController.DeleteBlogs)
-router.delete('/DeleteBlogsbyQuery',Middleware.Auth,BlogsController.DeleteBlogsbyQuery)
-router.post('/loginAuthor',AuthorController.loginAuthor)
+router.post('/User',userController.createUser)
+router.post('/login',userController.login)
+
+ router.post("/product",productController.createproducts)
+ router.get('/getProduct',productController.getProduct)
+router.post('/users/:userId/cart',Middleware.Auth,carController.createCart)
+router.post('/users/:userId/orders',Middleware.Auth,orderController.createOrder)
+
+
 
 module.exports = router;
